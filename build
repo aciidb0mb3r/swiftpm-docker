@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+# Dependencies:
+# PyYAML
+import yaml
+import urllib2
+import subprocess
+
+url = "https://swift.org/builds/development/ubuntu1404/latest-build.yml"
+# Get latest snapshot name.
+data = yaml.load(urllib2.urlopen(url).read())
+# FIXME: We shouldn't need to do this, it should be available in the API.
+latestSnapshot = data["download"].replace("-ubuntu14.04.tar.gz", "")
+# Call docker build.
+subprocess.call(["docker", "build", "-t", "swiftpm-docker", "--build-arg", "SWIFT_VERSION=%s" % latestSnapshot, "."])

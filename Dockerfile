@@ -13,8 +13,10 @@ RUN wget -q -O - https://swift.org/keys/all-keys.asc | gpg --import - && \
     gpg --keyserver hkp://pool.sks-keyservers.net --refresh-keys Swift
 
 ENV SWIFT_BRANCH development
-ENV SWIFT_VERSION swift-DEVELOPMENT-SNAPSHOT-2016-09-21-a
+ARG SWIFT_VERSION
 ENV SWIFT_PLATFORM ubuntu14.04
+
+# FIXME: Should change this to get URL from build script.
 
 RUN SWIFT_ARCHIVE_NAME=$SWIFT_VERSION-$SWIFT_PLATFORM && \
     SWIFT_URL=https://swift.org/builds/$SWIFT_BRANCH/$(echo "$SWIFT_PLATFORM" | tr -d .)/$SWIFT_VERSION/$SWIFT_ARCHIVE_NAME.tar.gz && \
