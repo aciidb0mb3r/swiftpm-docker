@@ -18,13 +18,18 @@ ENV SWIFT_PLATFORM ubuntu14.04
 
 # FIXME: Should change this to get URL from build script.
 
-RUN SWIFT_ARCHIVE_NAME=$SWIFT_VERSION-$SWIFT_PLATFORM && \
-    SWIFT_URL=https://swift.org/builds/$SWIFT_BRANCH/$(echo "$SWIFT_PLATFORM" | tr -d .)/$SWIFT_VERSION/$SWIFT_ARCHIVE_NAME.tar.gz && \
-    wget $SWIFT_URL && \
-    wget $SWIFT_URL.sig && \
-    gpg --verify $SWIFT_ARCHIVE_NAME.tar.gz.sig && \
-    tar -xvzf $SWIFT_ARCHIVE_NAME.tar.gz --directory / --strip-components=1 && \
-    rm -rf $SWIFT_ARCHIVE_NAME* /tmp/* /var/tmp/*
+# Jugaad install local image.
+# RUN wget http://192.168.0.2:8000/swift-DEVELOPMENT-SNAPSHOT-2016-10-05-a-ubuntu14.04.tar.gz && \
+#     tar -xvzf swift-DEVELOPMENT-SNAPSHOT-2016-10-05-a-ubuntu14.04.tar.gz --directory / --strip-components=1 && \
+#     rm -rf swift-DEVELOPMENT-SNAPSHOT* /tmp/* /var/tmp/*
+
+ RUN SWIFT_ARCHIVE_NAME=$SWIFT_VERSION-$SWIFT_PLATFORM && \
+     SWIFT_URL=https://swift.org/builds/$SWIFT_BRANCH/$(echo "$SWIFT_PLATFORM" | tr -d .)/$SWIFT_VERSION/$SWIFT_ARCHIVE_NAME.tar.gz && \
+     wget $SWIFT_URL && \
+     wget $SWIFT_URL.sig && \
+     gpg --verify $SWIFT_ARCHIVE_NAME.tar.gz.sig && \
+     tar -xvzf $SWIFT_ARCHIVE_NAME.tar.gz --directory / --strip-components=1 && \
+     rm -rf $SWIFT_ARCHIVE_NAME* /tmp/* /var/tmp/*
 
 # Set Swift Path
 ENV PATH /usr/bin:$PATH
