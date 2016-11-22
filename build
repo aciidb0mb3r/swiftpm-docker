@@ -22,4 +22,4 @@ else:
         log("Unable to install package: " + path)
         exit(1)
 # Call docker build.
-subprocess.call(["docker", "build", "-t", "swiftpm-docker-1610", "--build-arg", "SNAPSHOT=%s" % data["download"], "."])
+subprocess.call(["docker", "build", "-t", "swiftpm-docker-1604", "--build-arg", "SNAPSHOT=%s" % data["download"], "."])
